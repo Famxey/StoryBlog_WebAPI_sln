@@ -1,0 +1,795 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StoryBlog_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AD_Columns">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adCompany" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="adCompanyTel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adPhoto" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="adURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="adRemarks" Type="nvarchar" MaxLength="400" />
+          <Property Name="adCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Administration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aAccount" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="aPwd" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArtComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="artCmContent" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="artID" Type="int" Nullable="false" />
+          <Property Name="artCmCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="artClsTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="artNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="artContent" Type="nvarchar(max)" />
+          <Property Name="artCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="artClsID" Type="int" Nullable="false" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="artAuthority" Type="int" Nullable="false" />
+          <Property Name="artHot" Type="int" Nullable="false" />
+          <Property Name="artComCnt" Type="int" Nullable="false" />
+          <Property Name="artDigest" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="AttentionInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="attenUser" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PicComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="picCmContent" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" />
+          <Property Name="picID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PictureClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="picClsTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CoverFile" Type="nvarchar" MaxLength="200" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="picClsAuthority" Type="int" Nullable="false" />
+          <Property Name="picClsDescribe" Type="nvarchar" MaxLength="200" />
+          <Property Name="picClsPicCnt" Type="int" Nullable="false" />
+          <Property Name="picClsCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PictureInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImgFile" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="picCreateTime" Type="datetime2" Precision="7" />
+          <Property Name="picHot" Type="int" />
+          <Property Name="PicClsID" Type="int" Nullable="false" />
+          <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="picDescribe" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Account" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="24" Nullable="false" />
+          <Property Name="PassWord" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="200" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nchar" MaxLength="8" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Birthday" Type="datetime2" Precision="7" />
+          <Property Name="CreateTime" Type="datetime2" Precision="7" />
+          <Property Name="LoginTime" Type="datetime2" Precision="7" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="320" />
+          <Property Name="Introduce" Type="nvarchar" MaxLength="320" />
+        </EntityType>
+        <Association Name="FK_ArtComment_ArticleInfo">
+          <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="1" />
+          <End Role="ArtComment" Type="Self.ArtComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArtComment">
+              <PropertyRef Name="artID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtComment_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="ArtComment" Type="Self.ArtComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="ArtComment">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleClass_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="ArticleClass" Type="Self.ArticleClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="ArticleClass">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleInfo_ArticleClass">
+          <End Role="ArticleClass" Type="Self.ArticleClass" Multiplicity="1" />
+          <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArticleInfo">
+              <PropertyRef Name="artClsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleInfo_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="ArticleInfo">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttentionInfo_AttentionInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="AttentionInfo" Type="Self.AttentionInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="AttentionInfo">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PicComment_PictureInfo">
+          <End Role="PictureInfo" Type="Self.PictureInfo" Multiplicity="1" />
+          <End Role="PicComment" Type="Self.PicComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PictureInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PicComment">
+              <PropertyRef Name="picID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PicComment_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="PicComment" Type="Self.PicComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="PicComment">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PictureClass_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="PictureClass" Type="Self.PictureClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="PictureClass">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PictureInfo_PictureClass">
+          <End Role="PictureClass" Type="Self.PictureClass" Multiplicity="1" />
+          <End Role="PictureInfo" Type="Self.PictureInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PictureClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PictureInfo">
+              <PropertyRef Name="PicClsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PictureInfo_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="PictureInfo" Type="Self.PictureInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="PictureInfo">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StoryBlog_DBModelStoreContainer">
+          <EntitySet Name="AD_Columns" EntityType="Self.AD_Columns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Administration" EntityType="Self.Administration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArtComment" EntityType="Self.ArtComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleClass" EntityType="Self.ArticleClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleInfo" EntityType="Self.ArticleInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttentionInfo" EntityType="Self.AttentionInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PicComment" EntityType="Self.PicComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PictureClass" EntityType="Self.PictureClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PictureInfo" EntityType="Self.PictureInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ArtComment_ArticleInfo" Association="Self.FK_ArtComment_ArticleInfo">
+            <End Role="ArticleInfo" EntitySet="ArticleInfo" />
+            <End Role="ArtComment" EntitySet="ArtComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtComment_UserInfo" Association="Self.FK_ArtComment_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="ArtComment" EntitySet="ArtComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleClass_UserInfo" Association="Self.FK_ArticleClass_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="ArticleClass" EntitySet="ArticleClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleInfo_ArticleClass" Association="Self.FK_ArticleInfo_ArticleClass">
+            <End Role="ArticleClass" EntitySet="ArticleClass" />
+            <End Role="ArticleInfo" EntitySet="ArticleInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleInfo_UserInfo" Association="Self.FK_ArticleInfo_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="ArticleInfo" EntitySet="ArticleInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttentionInfo_AttentionInfo" Association="Self.FK_AttentionInfo_AttentionInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="AttentionInfo" EntitySet="AttentionInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PicComment_PictureInfo" Association="Self.FK_PicComment_PictureInfo">
+            <End Role="PictureInfo" EntitySet="PictureInfo" />
+            <End Role="PicComment" EntitySet="PicComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PicComment_UserInfo" Association="Self.FK_PicComment_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="PicComment" EntitySet="PicComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PictureClass_UserInfo" Association="Self.FK_PictureClass_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="PictureClass" EntitySet="PictureClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PictureInfo_PictureClass" Association="Self.FK_PictureInfo_PictureClass">
+            <End Role="PictureClass" EntitySet="PictureClass" />
+            <End Role="PictureInfo" EntitySet="PictureInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PictureInfo_UserInfo" Association="Self.FK_PictureInfo_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="PictureInfo" EntitySet="PictureInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StoryBlog_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AD_Columns">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adCompany" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adCompanyTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adPhoto" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adRemarks" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="adCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="Administration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="aPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArtComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="artCmContent" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="artID" Type="Int32" Nullable="false" />
+          <Property Name="artCmCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="ArticleInfo" Relationship="Self.FK_ArtComment_ArticleInfo" FromRole="ArtComment" ToRole="ArticleInfo" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_ArtComment_UserInfo" FromRole="ArtComment" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="ArticleClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="artClsTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_ArticleClass_UserInfo" FromRole="ArticleClass" ToRole="UserInfo" />
+          <NavigationProperty Name="ArticleInfo" Relationship="Self.FK_ArticleInfo_ArticleClass" FromRole="ArticleClass" ToRole="ArticleInfo" />
+        </EntityType>
+        <EntityType Name="ArticleInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="artNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="artContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="artCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="artClsID" Type="Int32" Nullable="false" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="artAuthority" Type="Int32" Nullable="false" />
+          <Property Name="artHot" Type="Int32" Nullable="false" />
+          <Property Name="artComCnt" Type="Int32" Nullable="false" />
+          <Property Name="artDigest" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArtComment" Relationship="Self.FK_ArtComment_ArticleInfo" FromRole="ArticleInfo" ToRole="ArtComment" />
+          <NavigationProperty Name="ArticleClass" Relationship="Self.FK_ArticleInfo_ArticleClass" FromRole="ArticleInfo" ToRole="ArticleClass" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_ArticleInfo_UserInfo" FromRole="ArticleInfo" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="AttentionInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="attenUser" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_AttentionInfo_AttentionInfo" FromRole="AttentionInfo" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="PicComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="picCmContent" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="picID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PictureInfo" Relationship="Self.FK_PicComment_PictureInfo" FromRole="PicComment" ToRole="PictureInfo" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_PicComment_UserInfo" FromRole="PicComment" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="PictureClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="picClsTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CoverFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="picClsAuthority" Type="Int32" Nullable="false" />
+          <Property Name="picClsDescribe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="picClsPicCnt" Type="Int32" Nullable="false" />
+          <Property Name="picClsCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_PictureClass_UserInfo" FromRole="PictureClass" ToRole="UserInfo" />
+          <NavigationProperty Name="PictureInfo" Relationship="Self.FK_PictureInfo_PictureClass" FromRole="PictureClass" ToRole="PictureInfo" />
+        </EntityType>
+        <EntityType Name="PictureInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImgFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="picCreateTime" Type="DateTime" Precision="7" />
+          <Property Name="picHot" Type="Int32" />
+          <Property Name="PicClsID" Type="Int32" Nullable="false" />
+          <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="picDescribe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PicComment" Relationship="Self.FK_PicComment_PictureInfo" FromRole="PictureInfo" ToRole="PicComment" />
+          <NavigationProperty Name="PictureClass" Relationship="Self.FK_PictureInfo_PictureClass" FromRole="PictureInfo" ToRole="PictureClass" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK_PictureInfo_UserInfo" FromRole="PictureInfo" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Account" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NickName" Type="String" MaxLength="24" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Birthday" Type="DateTime" Precision="7" />
+          <Property Name="CreateTime" Type="DateTime" Precision="7" />
+          <Property Name="LoginTime" Type="DateTime" Precision="7" />
+          <Property Name="Describe" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="Introduce" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArtComment" Relationship="Self.FK_ArtComment_UserInfo" FromRole="UserInfo" ToRole="ArtComment" />
+          <NavigationProperty Name="ArticleClass" Relationship="Self.FK_ArticleClass_UserInfo" FromRole="UserInfo" ToRole="ArticleClass" />
+          <NavigationProperty Name="ArticleInfo" Relationship="Self.FK_ArticleInfo_UserInfo" FromRole="UserInfo" ToRole="ArticleInfo" />
+          <NavigationProperty Name="AttentionInfo" Relationship="Self.FK_AttentionInfo_AttentionInfo" FromRole="UserInfo" ToRole="AttentionInfo" />
+          <NavigationProperty Name="PicComment" Relationship="Self.FK_PicComment_UserInfo" FromRole="UserInfo" ToRole="PicComment" />
+          <NavigationProperty Name="PictureClass" Relationship="Self.FK_PictureClass_UserInfo" FromRole="UserInfo" ToRole="PictureClass" />
+          <NavigationProperty Name="PictureInfo" Relationship="Self.FK_PictureInfo_UserInfo" FromRole="UserInfo" ToRole="PictureInfo" />
+        </EntityType>
+        <Association Name="FK_ArtComment_ArticleInfo">
+          <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="1" />
+          <End Role="ArtComment" Type="Self.ArtComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArtComment">
+              <PropertyRef Name="artID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtComment_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="ArtComment" Type="Self.ArtComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="ArtComment">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleClass_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="ArticleClass" Type="Self.ArticleClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="ArticleClass">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleInfo_ArticleClass">
+          <End Role="ArticleClass" Type="Self.ArticleClass" Multiplicity="1" />
+          <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArticleInfo">
+              <PropertyRef Name="artClsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleInfo_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="ArticleInfo">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttentionInfo_AttentionInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="AttentionInfo" Type="Self.AttentionInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="AttentionInfo">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PicComment_PictureInfo">
+          <End Role="PictureInfo" Type="Self.PictureInfo" Multiplicity="1" />
+          <End Role="PicComment" Type="Self.PicComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PictureInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PicComment">
+              <PropertyRef Name="picID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PicComment_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="PicComment" Type="Self.PicComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="PicComment">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PictureClass_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="PictureClass" Type="Self.PictureClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="PictureClass">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PictureInfo_PictureClass">
+          <End Role="PictureClass" Type="Self.PictureClass" Multiplicity="1" />
+          <End Role="PictureInfo" Type="Self.PictureInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PictureClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PictureInfo">
+              <PropertyRef Name="PicClsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PictureInfo_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="PictureInfo" Type="Self.PictureInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Account" />
+            </Principal>
+            <Dependent Role="PictureInfo">
+              <PropertyRef Name="uAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StoryBlog_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AD_Columns" EntityType="Self.AD_Columns" />
+          <EntitySet Name="Administration" EntityType="Self.Administration" />
+          <EntitySet Name="ArtComment" EntityType="Self.ArtComment" />
+          <EntitySet Name="ArticleClass" EntityType="Self.ArticleClass" />
+          <EntitySet Name="ArticleInfo" EntityType="Self.ArticleInfo" />
+          <EntitySet Name="AttentionInfo" EntityType="Self.AttentionInfo" />
+          <EntitySet Name="PicComment" EntityType="Self.PicComment" />
+          <EntitySet Name="PictureClass" EntityType="Self.PictureClass" />
+          <EntitySet Name="PictureInfo" EntityType="Self.PictureInfo" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" />
+          <AssociationSet Name="FK_ArtComment_ArticleInfo" Association="Self.FK_ArtComment_ArticleInfo">
+            <End Role="ArticleInfo" EntitySet="ArticleInfo" />
+            <End Role="ArtComment" EntitySet="ArtComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtComment_UserInfo" Association="Self.FK_ArtComment_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="ArtComment" EntitySet="ArtComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleClass_UserInfo" Association="Self.FK_ArticleClass_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="ArticleClass" EntitySet="ArticleClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleInfo_ArticleClass" Association="Self.FK_ArticleInfo_ArticleClass">
+            <End Role="ArticleClass" EntitySet="ArticleClass" />
+            <End Role="ArticleInfo" EntitySet="ArticleInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleInfo_UserInfo" Association="Self.FK_ArticleInfo_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="ArticleInfo" EntitySet="ArticleInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttentionInfo_AttentionInfo" Association="Self.FK_AttentionInfo_AttentionInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="AttentionInfo" EntitySet="AttentionInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PicComment_PictureInfo" Association="Self.FK_PicComment_PictureInfo">
+            <End Role="PictureInfo" EntitySet="PictureInfo" />
+            <End Role="PicComment" EntitySet="PicComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PicComment_UserInfo" Association="Self.FK_PicComment_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="PicComment" EntitySet="PicComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PictureClass_UserInfo" Association="Self.FK_PictureClass_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="PictureClass" EntitySet="PictureClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PictureInfo_PictureClass" Association="Self.FK_PictureInfo_PictureClass">
+            <End Role="PictureClass" EntitySet="PictureClass" />
+            <End Role="PictureInfo" EntitySet="PictureInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PictureInfo_UserInfo" Association="Self.FK_PictureInfo_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="PictureInfo" EntitySet="PictureInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StoryBlog_DBModelStoreContainer" CdmEntityContainer="StoryBlog_DBEntities">
+          <EntitySetMapping Name="AD_Columns">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.AD_Columns">
+              <MappingFragment StoreEntitySet="AD_Columns">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="adCompany" ColumnName="adCompany" />
+                <ScalarProperty Name="adCompanyTel" ColumnName="adCompanyTel" />
+                <ScalarProperty Name="adPhoto" ColumnName="adPhoto" />
+                <ScalarProperty Name="adURL" ColumnName="adURL" />
+                <ScalarProperty Name="adRemarks" ColumnName="adRemarks" />
+                <ScalarProperty Name="adCreateTime" ColumnName="adCreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Administration">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.Administration">
+              <MappingFragment StoreEntitySet="Administration">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="aAccount" ColumnName="aAccount" />
+                <ScalarProperty Name="aPwd" ColumnName="aPwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtComment">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.ArtComment">
+              <MappingFragment StoreEntitySet="ArtComment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="artCmContent" ColumnName="artCmContent" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+                <ScalarProperty Name="artID" ColumnName="artID" />
+                <ScalarProperty Name="artCmCreateTime" ColumnName="artCmCreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleClass">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.ArticleClass">
+              <MappingFragment StoreEntitySet="ArticleClass">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="artClsTitle" ColumnName="artClsTitle" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleInfo">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.ArticleInfo">
+              <MappingFragment StoreEntitySet="ArticleInfo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="artNo" ColumnName="artNo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="artContent" ColumnName="artContent" />
+                <ScalarProperty Name="artCreateTime" ColumnName="artCreateTime" />
+                <ScalarProperty Name="artClsID" ColumnName="artClsID" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+                <ScalarProperty Name="artAuthority" ColumnName="artAuthority" />
+                <ScalarProperty Name="artHot" ColumnName="artHot" />
+                <ScalarProperty Name="artComCnt" ColumnName="artComCnt" />
+                <ScalarProperty Name="artDigest" ColumnName="artDigest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttentionInfo">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.AttentionInfo">
+              <MappingFragment StoreEntitySet="AttentionInfo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+                <ScalarProperty Name="attenUser" ColumnName="attenUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PicComment">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.PicComment">
+              <MappingFragment StoreEntitySet="PicComment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="picCmContent" ColumnName="picCmContent" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+                <ScalarProperty Name="picID" ColumnName="picID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PictureClass">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.PictureClass">
+              <MappingFragment StoreEntitySet="PictureClass">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="picClsTitle" ColumnName="picClsTitle" />
+                <ScalarProperty Name="CoverFile" ColumnName="CoverFile" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+                <ScalarProperty Name="picClsAuthority" ColumnName="picClsAuthority" />
+                <ScalarProperty Name="picClsDescribe" ColumnName="picClsDescribe" />
+                <ScalarProperty Name="picClsPicCnt" ColumnName="picClsPicCnt" />
+                <ScalarProperty Name="picClsCreateTime" ColumnName="picClsCreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PictureInfo">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.PictureInfo">
+              <MappingFragment StoreEntitySet="PictureInfo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ImgFile" ColumnName="ImgFile" />
+                <ScalarProperty Name="picCreateTime" ColumnName="picCreateTime" />
+                <ScalarProperty Name="picHot" ColumnName="picHot" />
+                <ScalarProperty Name="PicClsID" ColumnName="PicClsID" />
+                <ScalarProperty Name="uAccount" ColumnName="uAccount" />
+                <ScalarProperty Name="picDescribe" ColumnName="picDescribe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfo">
+            <EntityTypeMapping TypeName="StoryBlog_DBModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Introduce" ColumnName="Introduce" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

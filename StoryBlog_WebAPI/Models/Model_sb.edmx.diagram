@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd364a53c11e4928891c88b567f8f50a" Name="Diagram1">
+        <EntityTypeShape EntityType="StoryBlog_DBModel.AD_Columns" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.Administration" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.ArtComment" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.ArticleClass" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.ArticleInfo" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.AttentionInfo" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.PicComment" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.PictureClass" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.PictureInfo" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoryBlog_DBModel.UserInfo" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_ArtComment_ArticleInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_ArtComment_UserInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_ArticleClass_UserInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_ArticleInfo_ArticleClass" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_ArticleInfo_UserInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_AttentionInfo_AttentionInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_PicComment_PictureInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_PicComment_UserInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_PictureClass_UserInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_PictureInfo_PictureClass" ManuallyRouted="false" />
+        <AssociationConnector Association="StoryBlog_DBModel.FK_PictureInfo_UserInfo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
