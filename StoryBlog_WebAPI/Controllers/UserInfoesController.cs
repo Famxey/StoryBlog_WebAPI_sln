@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -149,6 +150,48 @@ namespace StoryBlog_WebAPI.Controllers
 
         }
 
+
+        [Route("api/UpdateUserImage")]
+        [ResponseType(typeof(string))]
+        public async Task<IHttpActionResult> UpdateUserImage(string Account, MultipartFormDataContent form)
+        {
+
+            if (Account==null)
+            {
+                return BadRequest();
+            }
+            if (form == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                #region
+                Stream stream = await form.ReadAsStreamAsync();
+
+                string imageName = form.Headers.ContentDisposition.FileName;
+
+                string filePath = "~/UploadPicture/HeadPicture/" + imageName;
+
+                System.Drawing.Image ResourceImage = System.Drawing.Image.FromStream(stream);
+
+                ResourceImage.Save(filePath);
+                #endregion
+
+                UserInfo userInfo = await db.UserInfo.FindAsync(Account);
+
+                userInfo.Picture = filePath;
+
+                await db.SaveChangesAsync();
+
+                return Ok("yes");
+            }
+            catch (Exception)
+            {
+                return Ok("no");
+            }
+        }
 
         // POST: api/UserInfoes
         [ResponseType(typeof(UserInfo))]
