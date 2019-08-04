@@ -5,17 +5,17 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
+
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
+
 using StoryBlog_WebAPI.Models;
+using StoryBlog_WebAPI.HelperCls;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace StoryBlog_WebAPI.Controllers
 {
@@ -23,7 +23,7 @@ namespace StoryBlog_WebAPI.Controllers
     {
         private StoryBlog_DBEntities db = new StoryBlog_DBEntities();
 
-        // GET: api/UserInfoes
+        [Route(Version_Helper.versionNumber + "/user_/get")]
         public IEnumerable<UserInfoHelper> GetUserInfo()
         {
             List<UserInfoHelper> userInfo = (from a in db.UserInfo
@@ -47,7 +47,7 @@ namespace StoryBlog_WebAPI.Controllers
         }
 
 
-        // GET: api/UserInfoes/5
+        [Route(Version_Helper.versionNumber + "/user_/get")]
         [ResponseType(typeof(UserInfo))]
         public async Task<IHttpActionResult> GetUserInfo(int id)
         {
@@ -80,7 +80,7 @@ namespace StoryBlog_WebAPI.Controllers
         }
 
 
-        [Route("api/UpdateUserInfo")]
+        [Route(Version_Helper.versionNumber + "/user_/update")]
         [ResponseType(typeof(FlagHelper))]
         public async Task<IHttpActionResult> UpdateUserInfo(string Option, string Account, List<UserInfo> lui)
         {
@@ -151,41 +151,91 @@ namespace StoryBlog_WebAPI.Controllers
         }
 
 
-        [Route("api/UpdateUserImage")]
+        [Route(Version_Helper.versionNumber + "/user_/update-croppedimgage")]
         [ResponseType(typeof(string))]
-        public async Task<IHttpActionResult> UpdateUserImage(string Account, MultipartFormDataContent form)
+        public async Task<IHttpActionResult> UpdateUserCroppedImage(string Account)
         {
-
-            if (Account==null)
+            if (Account == null)
             {
                 return BadRequest();
             }
-            if (form == null)
-            {
-                return BadRequest();
-            }
-
+         
             try
             {
-                #region
-                Stream stream = await form.ReadAsStreamAsync();
+                #region             
+                var content = Request.Content;
+                var tempUploadFiles = "/Upload/HeadPictureFiles/";
+                var newFileName = "";
+                string filePath = "";
+                string extname = "";
+                string authAccount = "";
+                string returnurl = "";
+                var sp = new MultipartMemoryStreamProvider();
+                Task.Run(async () => await Request.Content.ReadAsMultipartAsync(sp)).Wait();
 
-                string imageName = form.Headers.ContentDisposition.FileName;
+                foreach (var item in sp.Contents)
+                {
 
-                string filePath = "~/UploadPicture/HeadPicture/" + imageName;
+                    if (item.Headers.ContentDisposition.FileName != null)
+                    {
+                        var filename = item.Headers.ContentDisposition.FileName.Replace("\"", "");
 
-                System.Drawing.Image ResourceImage = System.Drawing.Image.FromStream(stream);
+                        FileInfo file = new FileInfo(filename);
 
-                ResourceImage.Save(filePath);
+                        string fileTypes = "gif,jpg,jpeg,png,bmp";
+
+                        if (Array.IndexOf(fileTypes.Split(','), file.Extension.Substring(1).ToLower()) == -1)
+                        {
+                            throw new ApplicationException("不支持上传文件类型");
+                        }
+
+                        //string[] strArray = filename.Split('.');
+                        //authAccount = strArray[0];
+                        //if (authAccount != Account)
+                        //{
+                        //    throw new ApplicationException("图片数据来源不明，不允许操作！");
+                        //}
+
+                        extname = filename.Substring(filename.LastIndexOf('.'), (filename.Length - filename.LastIndexOf('.')));
+
+                        newFileName = Guid.NewGuid().ToString().Substring(0, 6) + Account + extname;
+
+
+                        string newFilePath = DateTime.Now.ToString("yyyy-MM-dd") + "/";
+
+                        if (!Directory.Exists(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath))
+                        {
+                            Directory.CreateDirectory(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath);
+                        }
+                        filePath = Path.Combine(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath, newFileName);
+
+                        returnurl = Path.Combine(tempUploadFiles + newFilePath, newFileName);
+
+                        //Stream ms = System.Web.HttpContext.Current.Request.InputStream;
+
+                        var ms = item.ReadAsStreamAsync().Result;
+
+                        using (var br = new BinaryReader(ms))
+                        {
+                            if (ms.Length > 1048576 * 5)
+                            {
+                                throw new ApplicationException("文件太大");
+                            }
+                            var data = br.ReadBytes((int)ms.Length);
+                            File.WriteAllBytes(filePath, data);
+                        }
+                    }
+                }
+
                 #endregion
 
                 UserInfo userInfo = await db.UserInfo.FindAsync(Account);
 
-                userInfo.Picture = filePath;
+                userInfo.Picture = returnurl;
 
                 await db.SaveChangesAsync();
 
-                return Ok("yes");
+                return Ok(returnurl);
             }
             catch (Exception)
             {
@@ -193,53 +243,199 @@ namespace StoryBlog_WebAPI.Controllers
             }
         }
 
-        // POST: api/UserInfoes
-        [ResponseType(typeof(UserInfo))]
-        public async Task<IHttpActionResult> PostUserInfo(UserInfo userInfo)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            db.UserInfo.Add(userInfo);
+        [Route(Version_Helper.versionNumber + "/user_/update-bgpicture")]
+        [ResponseType(typeof(string))]
+        public async Task<IHttpActionResult> UpdateUserBGPicture(string Account)
+        {
+            if (Account == null)
+            {
+                return BadRequest();
+            }
 
             try
             {
+                #region             
+                var content = Request.Content;
+                var tempUploadFiles = "/Upload/BGPictureFiles/";
+                var newFileName = "";
+                string filePath = "";
+                string extname = "";
+                string authAccount = "";
+                string returnurl = "";
+                var sp = new MultipartMemoryStreamProvider();
+                Task.Run(async () => await Request.Content.ReadAsMultipartAsync(sp)).Wait();
+
+                foreach (var item in sp.Contents)
+                {
+
+                    if (item.Headers.ContentDisposition.FileName != null)
+                    {
+                        var filename = item.Headers.ContentDisposition.FileName.Replace("\"", "");
+
+                        FileInfo file = new FileInfo(filename);
+
+                        string fileTypes = "gif,jpg,jpeg,png,bmp";
+
+                        if (Array.IndexOf(fileTypes.Split(','), file.Extension.Substring(1).ToLower()) == -1)
+                        {
+                            throw new ApplicationException("不支持上传文件类型");
+                        }
+
+                        extname = filename.Substring(filename.LastIndexOf('.'), (filename.Length - filename.LastIndexOf('.')));
+
+                        newFileName = Guid.NewGuid().ToString().Substring(0, 6) + Account + extname;
+
+
+                        string newFilePath = DateTime.Now.ToString("yyyy-MM-dd") + "/";
+
+                        if (!Directory.Exists(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath))
+                        {
+                            Directory.CreateDirectory(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath);
+                        }
+                        filePath = Path.Combine(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath, newFileName);
+
+                        returnurl = Path.Combine(tempUploadFiles + newFilePath, newFileName);
+
+                        var ms = item.ReadAsStreamAsync().Result;
+
+                        using (var br = new BinaryReader(ms))
+                        {
+                            if (ms.Length > 1048576 * 5)
+                            {
+                                throw new ApplicationException("文件太大");
+                            }
+                            var data = br.ReadBytes((int)ms.Length);
+                            File.WriteAllBytes(filePath, data);
+                        }
+                    }
+                }
+
+                #endregion
+
+                UserInfo userInfo = await db.UserInfo.FindAsync(Account);
+
+                userInfo.BGPicture = returnurl;
+
                 await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserInfoExists(userInfo.Account))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtRoute("DefaultApi", new { id = userInfo.Account }, userInfo);
+                return Ok(returnurl);
+            }
+            catch (Exception)
+            {
+                return Ok("no");
+            }
         }
 
 
-
-        // DELETE: api/UserInfoes/5
-        [ResponseType(typeof(UserInfo))]
-        public async Task<IHttpActionResult> DeleteUserInfo(string id)
+        [Route(Version_Helper.versionNumber + "/user_/update-imgage")]
+        [ResponseType(typeof(string))]
+        public async Task<IHttpActionResult> UpdateUserImage(string Account, int X, int Y, int Width, int Height)
         {
-            UserInfo userInfo = await db.UserInfo.FindAsync(id);
-            if (userInfo == null)
+            if (Account == null)
             {
-                return NotFound();
+                return BadRequest();
             }
+            try
+            {
+                Cut_Helper cut = new Cut_Helper();
+                cut.X = X;
+                cut.Y = Y;
+                cut.Width = Width;
+                cut.Height = Height;
 
-            db.UserInfo.Remove(userInfo);
-            await db.SaveChangesAsync();
+                #region             
+                var content = Request.Content;
+                var tempUploadFiles = "/Upload/HeadPictureFiles/";
+                var newFileName = "";
+                string filePath = "";
+                string extname = "";
+                string authAccount = "";
+                string returnurl = "";
+                var sp = new MultipartMemoryStreamProvider();
+                Task.Run(async () => await Request.Content.ReadAsMultipartAsync(sp)).Wait();
 
-            return Ok(userInfo);
+                foreach (var item in sp.Contents)
+                {
+
+                    if (item.Headers.ContentDisposition.FileName != null)
+                    {
+                        var filename = item.Headers.ContentDisposition.FileName.Replace("\"", "");
+
+                        FileInfo file = new FileInfo(filename);
+
+                        string fileTypes = "gif,jpg,jpeg,png,bmp";
+
+                        if (Array.IndexOf(fileTypes.Split(','), file.Extension.Substring(1).ToLower()) == -1)
+                        {
+                            throw new ApplicationException("不支持上传文件类型");
+                        }
+
+                        //string[] strArray = filename.Split('.');
+                        //authAccount = strArray[0];
+                        //if (authAccount != Account)
+                        //{
+                        //    throw new ApplicationException("图片数据来源不明，不允许操作！");
+                        //}
+
+                        extname = filename.Substring(filename.LastIndexOf('.'), (filename.Length - filename.LastIndexOf('.')));
+
+                        newFileName = Guid.NewGuid().ToString().Substring(0, 6) + Account + extname;
+
+
+                        string newFilePath = DateTime.Now.ToString("yyyy-MM-dd") + "/";
+
+                        if (!Directory.Exists(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath))
+                        {
+                            Directory.CreateDirectory(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath);
+                        }
+                        filePath = Path.Combine(HostingEnvironment.MapPath("/") + tempUploadFiles + newFilePath, newFileName);
+
+                        returnurl = Path.Combine(tempUploadFiles + newFilePath, newFileName);
+
+                        var ms = item.ReadAsStreamAsync().Result;
+
+                        Bitmap bmp = CutImage(ms, cut);
+
+                        bmp.Save(filePath);
+
+                        //using (var br = new BinaryReader(ms))
+                        //{
+                        //    if (ms.Length > 1048576 * 5)
+                        //    {
+                        //        throw new ApplicationException("文件太大");
+                        //    }
+                        //    var data = br.ReadBytes((int)ms.Length);
+                        //    File.WriteAllBytes(filePath, data);
+                        //}
+                    }
+                }
+
+                #endregion
+
+                UserInfo userInfo = await db.UserInfo.FindAsync(Account);
+
+                userInfo.Picture = returnurl;
+
+                await db.SaveChangesAsync();
+
+                return Ok(returnurl);
+            }
+            catch (Exception)
+            {
+                return Ok("no");
+            }
         }
+
+
+        private Bitmap CutImage(Stream stream, Cut_Helper cut)
+        {
+            Bitmap bmp = new Bitmap(stream);
+
+            return bmp.Clone(new Rectangle(cut.X, cut.Y, cut.Width, cut.Height), PixelFormat.DontCare);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
@@ -249,6 +445,7 @@ namespace StoryBlog_WebAPI.Controllers
             }
             base.Dispose(disposing);
         }
+
 
         private bool UserInfoExists(string id)
         {

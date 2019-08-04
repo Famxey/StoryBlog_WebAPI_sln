@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using StoryBlog_WebAPI.HelperCls;
 using StoryBlog_WebAPI.Models;
 
 namespace StoryBlog_WebAPI.Controllers
@@ -17,7 +18,56 @@ namespace StoryBlog_WebAPI.Controllers
     {
         private StoryBlog_DBEntities db = new StoryBlog_DBEntities();
 
-        [Route("api/GetPictureInfoHot")]
+        [Route(Version_Helper.versionNumber + "/picture_/random")]
+        public IEnumerable<PictureHelper> GetArticleInfoHot(string Account, int Times)
+        {
+            int count = 40;
+            int page = Times;
+
+            List<PictureHelper> PictureInfo = (from i in db.PictureInfo
+                                               join c in db.PictureClass on i.PicClsID equals c.ID
+                                               orderby i.picCreateTime descending
+                                               where c.picClsAuthority == 1
+                                               select new PictureHelper
+                                               {
+                                                   ID = i.ID,
+                                                   Name = i.Name,
+                                                   picClsTitle = c.picClsTitle,
+                                                   ImgFile = i.ImgFile,
+                                                   picCreateTime = (DateTime)i.picCreateTime,
+                                                   picHot = i.picHot,
+                                                   PicClsID = i.PicClsID,
+                                                   picDescribe = i.picDescribe,
+                                                   uAccount = i.uAccount,
+                                                   Times = Times + 1,
+
+                                               }).Skip((page - 1) * count).Take(count).ToList();
+
+
+            List<PictureHelper> rndList = new List<PictureHelper>();
+            if (PictureInfo.Count > count / 2)
+            {
+                int[] intArr = new int[count / 2];
+
+                Random rnd = new Random();
+                while (rndList.Count < count / 2)
+                {
+                    int num = rnd.Next(1, PictureInfo.Count);
+                    if (!rndList.Contains(PictureInfo[num]))
+                    {
+                        rndList.Add(PictureInfo[num]);
+                    }
+                }
+                return rndList;
+            }
+            else
+            {
+                return PictureInfo;
+            }
+
+        }
+
+        [Route(Version_Helper.versionNumber + "/picture_/hot")]
         public IEnumerable<PictureHelper> GetPictureInfoHot(int page, int count)
         {
 

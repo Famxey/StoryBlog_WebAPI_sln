@@ -119,6 +119,7 @@
           <Property Name="LoginTime" Type="datetime2" Precision="7" />
           <Property Name="Describe" Type="nvarchar" MaxLength="320" />
           <Property Name="Introduce" Type="nvarchar" MaxLength="320" />
+          <Property Name="BGPicture" Type="nchar" MaxLength="200" />
         </EntityType>
         <Association Name="FK_ArtComment_ArticleInfo">
           <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="1" />
@@ -442,6 +443,7 @@
           <Property Name="LoginTime" Type="DateTime" Precision="7" />
           <Property Name="Describe" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
           <Property Name="Introduce" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="BGPicture" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="ArtComment" Relationship="Self.FK_ArtComment_UserInfo" FromRole="UserInfo" ToRole="ArtComment" />
           <NavigationProperty Name="ArticleClass" Relationship="Self.FK_ArticleClass_UserInfo" FromRole="UserInfo" ToRole="ArticleClass" />
           <NavigationProperty Name="ArticleInfo" Relationship="Self.FK_ArticleInfo_UserInfo" FromRole="UserInfo" ToRole="ArticleInfo" />
@@ -766,6 +768,7 @@
                 <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
                 <ScalarProperty Name="Describe" ColumnName="Describe" />
                 <ScalarProperty Name="Introduce" ColumnName="Introduce" />
+                <ScalarProperty Name="BGPicture" ColumnName="BGPicture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

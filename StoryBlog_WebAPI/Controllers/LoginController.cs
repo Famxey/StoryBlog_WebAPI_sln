@@ -9,6 +9,7 @@ using StoryBlog_WebAPI.Models;
 using System.Web.Http.Description;
 using System.Data.Entity;
 using System.Diagnostics;
+using StoryBlog_WebAPI.HelperCls;
 
 namespace StoryBlog_WebAPI.Controllers
 {
@@ -16,7 +17,7 @@ namespace StoryBlog_WebAPI.Controllers
     {
         private StoryBlog_DBEntities db = new StoryBlog_DBEntities();
 
-        [Route("api/PostLoginVerification")]
+        [Route(Version_Helper.versionNumber + "/login/verification")]
         [ResponseType(typeof(UserInfoHelper))]
         public async Task<IHttpActionResult> PostLoginVerification(List<UserInfo> lui)
         {

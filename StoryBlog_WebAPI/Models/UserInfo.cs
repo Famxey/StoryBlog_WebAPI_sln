@@ -25,7 +25,7 @@ namespace StoryBlog_WebAPI.Models
             this.PictureClass = new HashSet<PictureClass>();
             this.PictureInfo = new HashSet<PictureInfo>();
         }
-
+    
         public string Account { get; set; }
         public int ID { get; set; }
         public string NickName { get; set; }
@@ -39,7 +39,8 @@ namespace StoryBlog_WebAPI.Models
         public Nullable<System.DateTime> LoginTime { get; set; }
         public string Describe { get; set; }
         public string Introduce { get; set; }
-
+        public string BGPicture { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArtComment> ArtComment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

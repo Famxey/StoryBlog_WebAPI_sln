@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -163,7 +163,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AdministrationsController.cs" />
-    <Compile Include="Controllers\AD_ColumnsController.cs" />
     <Compile Include="Controllers\ArticleInfoesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PictureInfoesController.cs" />
@@ -171,6 +170,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperCls\Cut_Helper.cs" />
+    <Compile Include="HelperCls\Version_Helper.cs" />
     <Compile Include="Models\Administration.cs">
       <DependentUpon>Model_sb.tt</DependentUpon>
     </Compile>
@@ -183,6 +184,8 @@
     <Compile Include="Models\ArticleClass.cs">
       <DependentUpon>Model_sb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArticleClsHelper.cs" />
+    <Compile Include="Models\ArticleCommentHelper.cs" />
     <Compile Include="Models\ArticleHelper.cs" />
     <Compile Include="Models\ArticleInfo.cs">
       <DependentUpon>Model_sb.tt</DependentUpon>
@@ -346,6 +349,8 @@
           <DevelopmentServerPort>56386</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:888/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:888/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

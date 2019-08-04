@@ -20,6 +20,10 @@ namespace StoryBlog_WebAPI.Models
         public string artDigest { get; set; }
         public string artClsTitle { get; set; }
         public string NickName { get; set; }
+        public int Times { get; set; }
+
+        public bool pageUp { get; set; }
+        public bool pageDwon { get; set; }
 
         public string artCreateTimeA
         {

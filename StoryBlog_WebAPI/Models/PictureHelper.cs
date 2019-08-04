@@ -16,7 +16,7 @@ namespace StoryBlog_WebAPI.Models
         public int PicClsID { get; set; }
         public string uAccount { get; set; }
         public string picDescribe { get; set; }
-
+        public int Times { get; set; }
         public string picCreateTimeStr
         {
             get { return picCreateTime.ToString("yyyy/MM/dd/HH:mm:ss"); }
