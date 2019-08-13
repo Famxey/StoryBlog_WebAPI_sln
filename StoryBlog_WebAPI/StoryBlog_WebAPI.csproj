@@ -171,6 +171,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperCls\Cut_Helper.cs" />
+    <Compile Include="HelperCls\FileUploadHelper.cs" />
     <Compile Include="HelperCls\Version_Helper.cs" />
     <Compile Include="Models\Administration.cs">
       <DependentUpon>Model_sb.tt</DependentUpon>
@@ -215,6 +216,7 @@
     <Compile Include="Models\PictureClass.cs">
       <DependentUpon>Model_sb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PictureClsHelper.cs" />
     <Compile Include="Models\PictureHelper.cs" />
     <Compile Include="Models\PictureInfo.cs">
       <DependentUpon>Model_sb.tt</DependentUpon>

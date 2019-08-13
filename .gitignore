@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/StoryBlog_WebAPI/Upload/PictureFiles/2019-08-13

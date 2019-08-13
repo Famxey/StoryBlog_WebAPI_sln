@@ -183,7 +183,7 @@ namespace StoryBlog_WebAPI.Controllers
             try
             {
 
-                var art =await db.ArticleInfo.Where(a => a.artNo == artNo).FirstOrDefaultAsync();
+                var art = await db.ArticleInfo.Where(a => a.artNo == artNo).FirstOrDefaultAsync();
 
                 int artID = art.ID;
 
@@ -202,7 +202,7 @@ namespace StoryBlog_WebAPI.Controllers
                 //更新评论数量
                 var acm = db.ArtComment.Where(c => c.artID == artCM.artID).ToList();
                 int artcmcn = acm.Count;
-                ArticleInfo ai =await db.ArticleInfo.FindAsync(artCM.artID);
+                ArticleInfo ai = await db.ArticleInfo.FindAsync(artCM.artID);
                 ai.artComCnt = artcmcn;
                 await db.SaveChangesAsync();
 
@@ -357,30 +357,40 @@ namespace StoryBlog_WebAPI.Controllers
 
 
         [Route(Version_Helper.versionNumber + "/article_/info")]
-        public IEnumerable<ArticleHelper> GetArticleInfoByInfo(string artNo)
+        public async Task<IEnumerable<ArticleHelper>> GetArticleInfoByInfo(string artNo)
         {
+            try
+            {
+                ArticleInfo ai = await db.ArticleInfo.Where(a => a.artNo == artNo).FirstOrDefaultAsync();
+                ai.artHot = ai.artHot + 1;
+                await db.SaveChangesAsync();
 
-            List<ArticleHelper> ArticleInfo = (from i in db.ArticleInfo
-                                               join u in db.UserInfo
-                                               on i.uAccount equals u.Account
-                                               where i.artNo == artNo
-                                               select new ArticleHelper
-                                               {
-                                                   ID = i.ID,
-                                                   Title = i.Title,
-                                                   artNo = i.artNo,
-                                                   artCreateTime = i.artCreateTime,
-                                                   NickName = u.NickName,
-                                                   uAccount = i.uAccount,
-                                                   artContent = i.artContent,
-                                                   artHot = i.artHot,
-                                                   artComCnt = i.artComCnt,
-                                                   artDigest = i.artDigest,
-                                                   artAuthority = i.artAuthority,
-                                                   artClsID = i.artClsID
-                                               }).ToList();
+                List<ArticleHelper> ArticleInfo = (from i in db.ArticleInfo
+                                                   join u in db.UserInfo
+                                                   on i.uAccount equals u.Account
+                                                   where i.artNo == artNo
+                                                   select new ArticleHelper
+                                                   {
+                                                       ID = i.ID,
+                                                       Title = i.Title,
+                                                       artNo = i.artNo,
+                                                       artCreateTime = i.artCreateTime,
+                                                       NickName = u.NickName,
+                                                       uAccount = i.uAccount,
+                                                       artContent = i.artContent,
+                                                       artHot = i.artHot,
+                                                       artComCnt = i.artComCnt,
+                                                       artDigest = i.artDigest,
+                                                       artAuthority = i.artAuthority,
+                                                       artClsID = i.artClsID
+                                                   }).ToList();
 
-            return ArticleInfo;
+                return ArticleInfo;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
 
