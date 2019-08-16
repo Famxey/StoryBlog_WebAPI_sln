@@ -21,5 +21,6 @@ namespace StoryBlog_WebAPI.Models
         public string Describe { get; set; }
         public string Introduce { get; set; }
 
+        public string BGPicture { get; set; }
     }
 }

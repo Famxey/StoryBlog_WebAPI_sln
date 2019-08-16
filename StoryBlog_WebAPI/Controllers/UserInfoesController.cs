@@ -23,62 +23,6 @@ namespace StoryBlog_WebAPI.Controllers
     {
         private StoryBlog_DBEntities db = new StoryBlog_DBEntities();
 
-        [Route(Version_Helper.versionNumber + "/user_/get")]
-        public IEnumerable<UserInfoHelper> GetUserInfo()
-        {
-            List<UserInfoHelper> userInfo = (from a in db.UserInfo
-                                             select new UserInfoHelper
-                                             {
-                                                 Account = a.Account,
-                                                 ID = a.ID,
-                                                 NickName = a.NickName,
-                                                 PassWord = a.PassWord,
-                                                 Picture = a.Picture,
-                                                 Phone = a.Phone,
-                                                 Gender = a.Gender,
-                                                 Age = a.Age,
-                                                 Birthday = a.Birthday,
-                                                 CreateTime = a.CreateTime,
-                                                 LoginTime = a.LoginTime,
-                                                 Describe = a.Describe,
-                                                 Introduce = a.Introduce,
-                                             }).ToList();
-            return userInfo;
-        }
-
-
-        [Route(Version_Helper.versionNumber + "/user_/get")]
-        [ResponseType(typeof(UserInfo))]
-        public async Task<IHttpActionResult> GetUserInfo(int id)
-        {
-            List<UserInfoHelper> userInfo = await (from a in db.UserInfo
-                                                   where a.ID == id
-                                                   select new UserInfoHelper
-                                                   {
-                                                       Account = a.Account,
-                                                       ID = a.ID,
-                                                       NickName = a.NickName,
-                                                       PassWord = a.PassWord,
-                                                       Picture = a.Picture,
-                                                       Phone = a.Phone,
-                                                       Gender = a.Gender,
-                                                       Age = a.Age,
-                                                       Birthday = a.Birthday,
-                                                       CreateTime = a.CreateTime,
-                                                       LoginTime = a.LoginTime,
-                                                       Describe = a.Describe,
-                                                       Introduce = a.Introduce,
-                                                   }).ToListAsync();
-
-
-            if (userInfo == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(userInfo);
-        }
-
 
         [Route(Version_Helper.versionNumber + "/user_/update")]
         [ResponseType(typeof(FlagHelper))]
@@ -159,7 +103,7 @@ namespace StoryBlog_WebAPI.Controllers
             {
                 return BadRequest();
             }
-         
+
             try
             {
                 #region             
@@ -426,7 +370,6 @@ namespace StoryBlog_WebAPI.Controllers
                 return Ok("no");
             }
         }
-
 
         private Bitmap CutImage(Stream stream, Cut_Helper cut)
         {

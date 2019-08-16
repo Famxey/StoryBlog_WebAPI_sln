@@ -27,7 +27,7 @@ namespace StoryBlog_WebAPI.Controllers
 
         [HttpPost]
         [Route(Version_Helper.versionNumber + "/picture_/update")]
-        public async Task<IEnumerable<FlagHelper>> PostPictureClsByEditCls(string uAccount,string picDescribe, int ID)
+        public async Task<IEnumerable<FlagHelper>> PostPictureClsByEditCls(string uAccount, string picDescribe, int ID)
         {
             List<FlagHelper> list = new List<FlagHelper>();
             FlagHelper fg = new FlagHelper();
@@ -205,8 +205,10 @@ namespace StoryBlog_WebAPI.Controllers
                 db.PictureInfo.Add(pic);
 
                 //更新所上传相册的照片量
+                var picAll = await db.PictureInfo.Where(a => a.uAccount == uAccount&&a.PicClsID== picClsID).ToListAsync();
+
                 PictureClass picCls = db.PictureClass.Find(picClsID);
-                picCls.picClsPicCnt = picCls.picClsPicCnt + 1;
+                picCls.picClsPicCnt = picAll.Count + 1;
 
                 await db.SaveChangesAsync();
 
@@ -245,7 +247,7 @@ namespace StoryBlog_WebAPI.Controllers
                                                    picClsTitle = c.picClsTitle,
                                                    picDescribe = p.picDescribe,
                                                    picCreateTime = (DateTime)p.picCreateTime
-                                               }).OrderByDescending(p=>p.picCreateTime).ToList();
+                                               }).OrderByDescending(p => p.picCreateTime).ToList();
 
             return PictureInfo;
         }
@@ -273,6 +275,16 @@ namespace StoryBlog_WebAPI.Controllers
                     fg.Flag = false;
                     list.Add(fg);
                     return list;
+                }
+
+                var oldPictures = await db.PictureInfo.Where(p => p.PicClsID == ID).ToListAsync();
+
+                var defaultPicCls = await db.PictureClass.Where(p => p.picClsTitle == "默认相册" && p.uAccount == uAccount).ToListAsync();
+                int defaultPicClsID = defaultPicCls.FirstOrDefault().ID;
+
+                foreach (var item in oldPictures)
+                {
+                    item.PicClsID = defaultPicClsID;
                 }
 
                 db.PictureClass.Remove(picCls);
