@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StoryBlog_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StoryBlog_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AD_Columns">
           <Key>
             <PropertyRef Name="ID" />
@@ -15,7 +15,7 @@
           <Property Name="adPhoto" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="adURL" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="adRemarks" Type="nvarchar" MaxLength="400" />
-          <Property Name="adCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="adCreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Administration">
           <Key>
@@ -33,7 +33,7 @@
           <Property Name="artCmContent" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="artID" Type="int" Nullable="false" />
-          <Property Name="artCmCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="artCmCreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ArticleClass">
           <Key>
@@ -51,7 +51,7 @@
           <Property Name="artNo" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="artContent" Type="nvarchar(max)" />
-          <Property Name="artCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="artCreateTime" Type="datetime" Nullable="false" />
           <Property Name="artClsID" Type="int" Nullable="false" />
           <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="artAuthority" Type="int" Nullable="false" />
@@ -87,7 +87,7 @@
           <Property Name="picClsAuthority" Type="int" Nullable="false" />
           <Property Name="picClsDescribe" Type="nvarchar" MaxLength="200" />
           <Property Name="picClsPicCnt" Type="int" Nullable="false" />
-          <Property Name="picClsCreateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="picClsCreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="PictureInfo">
           <Key>
@@ -96,7 +96,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ImgFile" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="picCreateTime" Type="datetime2" Precision="7" />
+          <Property Name="picCreateTime" Type="datetime" />
           <Property Name="picHot" Type="int" />
           <Property Name="PicClsID" Type="int" Nullable="false" />
           <Property Name="uAccount" Type="nvarchar" MaxLength="40" Nullable="false" />
@@ -107,16 +107,15 @@
             <PropertyRef Name="Account" />
           </Key>
           <Property Name="Account" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NickName" Type="nvarchar" MaxLength="24" Nullable="false" />
-          <Property Name="PassWord" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="PassWord" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Picture" Type="nvarchar" MaxLength="200" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="nchar" MaxLength="8" />
           <Property Name="Age" Type="int" />
-          <Property Name="Birthday" Type="datetime2" Precision="7" />
-          <Property Name="CreateTime" Type="datetime2" Precision="7" />
-          <Property Name="LoginTime" Type="datetime2" Precision="7" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="Describe" Type="nvarchar" MaxLength="320" />
           <Property Name="Introduce" Type="nvarchar" MaxLength="320" />
           <Property Name="BGPicture" Type="nchar" MaxLength="200" />
@@ -309,8 +308,7 @@
             <End Role="PictureInfo" EntitySet="PictureInfo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StoryBlog_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -324,7 +322,7 @@
           <Property Name="adPhoto" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="adURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="adRemarks" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="adCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="adCreateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Administration">
           <Key>
@@ -342,7 +340,7 @@
           <Property Name="artCmContent" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="artID" Type="Int32" Nullable="false" />
-          <Property Name="artCmCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="artCmCreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ArticleInfo" Relationship="Self.FK_ArtComment_ArticleInfo" FromRole="ArtComment" ToRole="ArticleInfo" />
           <NavigationProperty Name="UserInfo" Relationship="Self.FK_ArtComment_UserInfo" FromRole="ArtComment" ToRole="UserInfo" />
         </EntityType>
@@ -364,7 +362,7 @@
           <Property Name="artNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="artContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="artCreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="artClsID" Type="Int32" Nullable="false" />
           <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="artAuthority" Type="Int32" Nullable="false" />
@@ -406,7 +404,7 @@
           <Property Name="picClsAuthority" Type="Int32" Nullable="false" />
           <Property Name="picClsDescribe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="picClsPicCnt" Type="Int32" Nullable="false" />
-          <Property Name="picClsCreateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="picClsCreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UserInfo" Relationship="Self.FK_PictureClass_UserInfo" FromRole="PictureClass" ToRole="UserInfo" />
           <NavigationProperty Name="PictureInfo" Relationship="Self.FK_PictureInfo_PictureClass" FromRole="PictureClass" ToRole="PictureInfo" />
         </EntityType>
@@ -417,7 +415,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ImgFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="picCreateTime" Type="DateTime" Precision="7" />
+          <Property Name="picCreateTime" Type="DateTime" Precision="3" />
           <Property Name="picHot" Type="Int32" />
           <Property Name="PicClsID" Type="Int32" Nullable="false" />
           <Property Name="uAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
@@ -431,16 +429,14 @@
             <PropertyRef Name="Account" />
           </Key>
           <Property Name="Account" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NickName" Type="String" MaxLength="24" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PassWord" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
           <Property Name="Age" Type="Int32" />
-          <Property Name="Birthday" Type="DateTime" Precision="7" />
-          <Property Name="CreateTime" Type="DateTime" Precision="7" />
-          <Property Name="LoginTime" Type="DateTime" Precision="7" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="Describe" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
           <Property Name="Introduce" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
           <Property Name="BGPicture" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
@@ -451,6 +447,7 @@
           <NavigationProperty Name="PicComment" Relationship="Self.FK_PicComment_UserInfo" FromRole="UserInfo" ToRole="PicComment" />
           <NavigationProperty Name="PictureClass" Relationship="Self.FK_PictureClass_UserInfo" FromRole="UserInfo" ToRole="PictureClass" />
           <NavigationProperty Name="PictureInfo" Relationship="Self.FK_PictureInfo_UserInfo" FromRole="UserInfo" ToRole="PictureInfo" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_ArtComment_ArticleInfo">
           <End Role="ArticleInfo" Type="Self.ArticleInfo" Multiplicity="1" />
@@ -755,8 +752,8 @@
           <EntitySetMapping Name="UserInfo">
             <EntityTypeMapping TypeName="StoryBlog_DBModel.UserInfo">
               <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NickName" ColumnName="NickName" />
                 <ScalarProperty Name="PassWord" ColumnName="PassWord" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
@@ -765,7 +762,6 @@
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
                 <ScalarProperty Name="Describe" ColumnName="Describe" />
                 <ScalarProperty Name="Introduce" ColumnName="Introduce" />
                 <ScalarProperty Name="BGPicture" ColumnName="BGPicture" />

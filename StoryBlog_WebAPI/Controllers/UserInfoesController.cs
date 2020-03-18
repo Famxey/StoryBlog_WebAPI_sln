@@ -16,12 +16,126 @@ using StoryBlog_WebAPI.Models;
 using StoryBlog_WebAPI.HelperCls;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace StoryBlog_WebAPI.Controllers
 {
     public class UserInfoesController : ApiController
     {
         private StoryBlog_DBEntities db = new StoryBlog_DBEntities();
+
+
+        [Route(Version_Helper.versionNumber + "/user_/get")]
+        public IEnumerable<UserInfoHelper> GetUserInfo()
+        {
+            List<UserInfoHelper> userInfo = (from a in db.UserInfo
+                                             select new UserInfoHelper
+                                             {
+                                                 Account = a.Account,
+                                                 Guid = a.Guid,
+                                                 NickName = a.NickName,
+                                                 PassWord = a.PassWord,
+                                                 Picture = a.Picture,
+                                                 Phone = a.Phone,
+                                                 Gender = a.Gender,
+                                                 Age = a.Age,
+                                                 Birthday = a.Birthday,
+                                                 CreateTime = a.CreateTime,
+                                                 Describe = a.Describe,
+                                                 Introduce = a.Introduce,
+                                             }).ToList();
+            return userInfo;
+        }
+
+
+        [Route(Version_Helper.versionNumber + "/user_/get")]
+        [ResponseType(typeof(UserInfo))]
+        public async Task<IHttpActionResult> GetUserInfo(string id)
+        {
+            List<UserInfoHelper> userInfo = await (from a in db.UserInfo
+                                                   where a.Guid == id
+                                                   select new UserInfoHelper
+                                                   {
+                                                       Account = a.Account,
+                                                       Guid = a.Guid,
+                                                       NickName = a.NickName,
+                                                       PassWord = a.PassWord,
+                                                       Picture = a.Picture,
+                                                       Phone = a.Phone,
+                                                       Gender = a.Gender,
+                                                       Age = a.Age,
+                                                       Birthday = a.Birthday,
+                                                       CreateTime = a.CreateTime,
+                                                       Describe = a.Describe,
+                                                       Introduce = a.Introduce,
+                                                   }).ToListAsync();
+
+
+            if (userInfo == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userInfo);
+        }
+
+
+        [Route(Version_Helper.versionNumber + "/user_/account")]
+        [ResponseType(typeof(FlagHelper))]
+        [HttpGet]
+        public async Task<IHttpActionResult> AccountValid(string account)
+        {
+            List<FlagHelper> fglist = new List<FlagHelper>();
+            FlagHelper flg = new FlagHelper();
+
+            flg.Flag = await db.UserInfo.FindAsync(account) != null ? true : false;
+
+            fglist.Add(flg);
+
+            return Ok(fglist);
+        }
+
+
+        [Route(Version_Helper.versionNumber + "/user_/add")]
+        [ResponseType(typeof(UserInfoHelper))]
+        public async Task<IHttpActionResult> AddUserInfo(List<UserInfo> lui)
+        {
+            List<UserInfoHelper> list = new List<UserInfoHelper>();
+            UserInfoHelper uih = new UserInfoHelper();
+            try
+            {
+                if (lui == null)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                UserInfo ui = new UserInfo()
+                {
+                    Account = lui[0].Account,
+                    NickName = lui[0].NickName,
+                    PassWord = lui[0].PassWord,
+                    Guid = Guid.NewGuid().ToString(),
+                    CreateTime = DateTime.Now
+                };
+
+                db.UserInfo.Add(ui);
+
+                await db.SaveChangesAsync();
+
+                uih.Flag = true;
+                list.Add(uih);
+                return Ok(list);
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                uih.Flag = false;
+                list.Add(uih);
+                return Ok(list);
+            }
+
+        }
 
 
         [Route(Version_Helper.versionNumber + "/user_/update")]

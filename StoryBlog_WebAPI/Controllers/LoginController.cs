@@ -35,7 +35,7 @@ namespace StoryBlog_WebAPI.Controllers
                                                    select new UserInfoHelper
                                                    {
                                                        Account = a.Account,
-                                                       ID = a.ID,
+                                                       Guid = a.Guid,
                                                        NickName = a.NickName,
                                                        PassWord = a.PassWord,
                                                        Picture = a.Picture,
@@ -44,7 +44,6 @@ namespace StoryBlog_WebAPI.Controllers
                                                        Age = a.Age,
                                                        Birthday = a.Birthday,
                                                        CreateTime = a.CreateTime,
-                                                       LoginTime = a.LoginTime,
                                                        Describe = a.Describe,
                                                        Introduce = a.Introduce,
                                                        Flag = true
