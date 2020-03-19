@@ -80,6 +80,50 @@ namespace StoryBlog_WebAPI.Controllers
         }
 
 
+        [Route(Version_Helper.versionNumber + "/user_/verification")]
+        [ResponseType(typeof(UserInfoHelper))]
+        public async Task<IHttpActionResult> PostLoginVerification(List<UserInfo> lui)
+        {
+
+            List<UserInfoHelper> list = await Verification(lui[0].Account, lui[0].PassWord);
+
+            return Ok(list);
+        }
+
+        private async Task<List<UserInfoHelper>> Verification(string Account, string PassWord)
+        {
+            List<UserInfoHelper> userInfo = await (from a in db.UserInfo
+                                                   where a.Account == Account && a.PassWord == PassWord
+                                                   select new UserInfoHelper
+                                                   {
+                                                       Account = a.Account,
+                                                       Guid = a.Guid,
+                                                       NickName = a.NickName,
+                                                       PassWord = a.PassWord,
+                                                       Picture = a.Picture,
+                                                       Phone = a.Phone,
+                                                       Gender = a.Gender,
+                                                       Age = a.Age,
+                                                       Birthday = a.Birthday,
+                                                       CreateTime = a.CreateTime,
+                                                       Describe = a.Describe,
+                                                       Introduce = a.Introduce,
+                                                       Flag = true
+                                                   }).ToListAsync();
+
+            if (userInfo.Count == 0)
+            {
+                UserInfoHelper u = new UserInfoHelper();
+                u.Flag = false;
+                userInfo.Add(u);
+                return userInfo;
+            }
+            else
+            {
+                return userInfo;
+            }
+        }
+
         [Route(Version_Helper.versionNumber + "/user_/account")]
         [ResponseType(typeof(FlagHelper))]
         [HttpGet]
@@ -148,10 +192,6 @@ namespace StoryBlog_WebAPI.Controllers
 
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
 
                 if (Account != lui[0].Account)
                 {

@@ -167,7 +167,6 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AdministrationsController.cs" />
     <Compile Include="Controllers\ArticleInfoesController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PictureInfoesController.cs" />
     <Compile Include="Controllers\UserInfoesController.cs" />
